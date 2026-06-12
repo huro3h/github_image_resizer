@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Image Resizer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      color: #24292f;
+      background: #ffffff;
+      width: 280px;
+      padding: 16px;
+    }
+
+    h1 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #24292f;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #57606a;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      padding: 5px 8px;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #24292f;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input[type="number"]:focus {
+      border-color: #0969da;
+      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+    }
+
+    input[type="number"]:disabled {
+      background: #f6f8fa;
+      color: #8c959f;
+    }
+
+    .unit {
+      color: #57606a;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      color: #24292f;
+      cursor: pointer;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #d0d7de;
+      margin: 12px 0;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .toggle-label {
+      font-weight: 500;
+    }
+
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #d0d7de;
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 3px;
+      top: 3px;
+      background: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .slider {
+      background: #1a7f37;
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(16px);
+    }
+
+    button#save {
+      width: 100%;
+      padding: 6px 12px;
+      background: #1f883d;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button#save:hover {
+      background: #1a7f37;
+    }
+
+    #status {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 12px;
+      color: #1a7f37;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Image Resizer</h1>
+
+  <div class="toggle-row">
+    <span class="toggle-label">有効</span>
+    <label class="toggle">
+      <input type="checkbox" id="enabled" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="field">
+    <label for="maxWidth">最大幅 (width)</label>
+    <div class="input-row">
+      <input type="number" id="maxWidth" min="1" max="9999" placeholder="例: 600" />
+      <span class="unit">px</span>
+    </div>
+  </div>
+
+  <div class="checkbox-row">
+    <input type="checkbox" id="keepAspect" />
+    <label for="keepAspect">アスペクト比を維持して height も自動計算する</label>
+  </div>
+
+  <div class="field" id="heightField">
+    <label for="maxHeight">最大高さ (height)</label>
+    <div class="input-row">
+      <input type="number" id="maxHeight" min="1" max="9999" placeholder="例: 400" />
+      <span class="unit">px</span>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="checkbox-row">
+    <input type="checkbox" id="convertPaste" />
+    <label for="convertPaste">クリップボードからペーストした img タグも変換する</label>
+  </div>
+
+  <hr class="divider" />
+
+  <button id="save">保存</button>
+  <div id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

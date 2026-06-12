@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Image Resizer",
+  "description": "GitHubのコメントに添付した画像のimgタグのwidth/heightを自動で設定します",
+  "version": "1.0.0",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GitHub Image Resizer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
