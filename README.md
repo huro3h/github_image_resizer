@@ -1,0 +1,2 @@
+# github_image_resizer
+GitHubにアップロードした画像を設定したサイズに調整してくれるChrome拡張機能
